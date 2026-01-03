@@ -1,42 +1,133 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
+
+// Public Pages
 import LandingPage from './pages/LandingPage';
 import Login from './pages/Login';
 import Register from './pages/Register';
+
+// Common Protected Pages
 import Dashboard from './pages/Dashboard';
 import EmployeeProfile from './pages/EmployeeProfile';
-// Admin Imports
-import EmployeeList from './pages/admin/EmployeeList';
-import LeaveRequests from './pages/admin/LeaveRequests';
-import PayrollList from './pages/admin/PayrollList';
-import AdminAttendance from './pages/admin/AdminAttendance'; // NEW IMPORT
-// Employee Imports
-import Attendance from './pages/employee/Attendance';
-import LeaveApplication from './pages/employee/LeaveApplication';
-import SalaryDetails from './pages/employee/SalaryDetails';
 
+// Admin Pages
+import EmployeeList from './pages/admin/EmployeeList';
+import AddEmployee from './pages/admin/AddEmployee';
+import EditEmployee from './pages/admin/EditEmployee';
+import LeaveList from './pages/admin/LeaveList';
+import AdminAttendance from './pages/admin/AdminAttendance';
+import AddSalary from './pages/admin/AddSalary';
+import SalaryList from './pages/admin/SalaryList';
+
+// Employee Pages
+import Leaves from './pages/employee/Leaves';
+import AddLeave from './pages/employee/AddLeave';
+import Attendance from './pages/employee/Attendance';
+import Salary from './pages/employee/Salary';
+
+// Components & Utilities
 import Layout from './components/Layout';
+import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Layout><LandingPage /></Layout>} />
+      
+      {/* --- PUBLIC ROUTES --- */}
+      <Route path="/" element={<LandingPage />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       
-      <Route path="/dashboard" element={<Layout><Dashboard /></Layout>} />
-      <Route path="/profile" element={<Layout><EmployeeProfile /></Layout>} />
+      {/* --- COMMON PROTECTED ROUTES --- */}
+      <Route 
+        path="/dashboard" 
+        element={
+          <ProtectedRoute>
+            <Layout><Dashboard /></Layout>
+          </ProtectedRoute>
+        } 
+      />
       
-      {/* Admin Routes */}
-      <Route path="/admin/employees" element={<Layout><EmployeeList /></Layout>} />
-      <Route path="/admin/leaves" element={<Layout><LeaveRequests /></Layout>} />
-      <Route path="/admin/payroll" element={<Layout><PayrollList /></Layout>} />
-      <Route path="/admin/attendance" element={<Layout><AdminAttendance /></Layout>} /> {/* NEW ROUTE */}
+      <Route 
+        path="/profile" 
+        element={
+          <ProtectedRoute>
+            <Layout><EmployeeProfile /></Layout>
+          </ProtectedRoute>
+        } 
+      />
+      
+      {/* --- ADMIN ROUTES --- */}
+      <Route path="/admin/employees" element={
+        <ProtectedRoute requiredRole="admin">
+           <Layout><EmployeeList /></Layout>
+        </ProtectedRoute>
+      } />
+      
+      <Route path="/admin/add-employee" element={
+        <ProtectedRoute requiredRole="admin">
+           <Layout><AddEmployee /></Layout>
+        </ProtectedRoute>
+      } />
 
-      {/* Employee Routes */}
-      <Route path="/employee/attendance" element={<Layout><Attendance /></Layout>} />
-      <Route path="/employee/leaves" element={<Layout><LeaveApplication /></Layout>} />
-      <Route path="/employee/salary" element={<Layout><SalaryDetails /></Layout>} />
+      <Route path="/admin/employee/edit/:id" element={
+        <ProtectedRoute requiredRole="admin">
+           <Layout><EditEmployee /></Layout>
+        </ProtectedRoute>
+      } />
+
+      <Route path="/admin/leaves" element={
+        <ProtectedRoute requiredRole="admin">
+           <Layout><LeaveList /></Layout>
+        </ProtectedRoute>
+      } />
+
+      <Route path="/admin/attendance" element={
+        <ProtectedRoute requiredRole="admin">
+           <Layout><AdminAttendance /></Layout>
+        </ProtectedRoute>
+      } />
+
+      <Route path="/admin/salary/add" element={
+        <ProtectedRoute requiredRole="admin">
+           <Layout><AddSalary /></Layout>
+        </ProtectedRoute>
+      } />
+
+      <Route path="/admin/salary" element={
+        <ProtectedRoute requiredRole="admin">
+           <Layout><SalaryList /></Layout>
+        </ProtectedRoute>
+      } />
+
+      {/* --- EMPLOYEE ROUTES --- */}
+      <Route path="/employee/leaves" element={
+        <ProtectedRoute>
+           <Layout><Leaves /></Layout>
+        </ProtectedRoute>
+      } />
+
+      <Route path="/employee/leave-add" element={
+        <ProtectedRoute>
+           <Layout><AddLeave /></Layout>
+        </ProtectedRoute>
+      } />
+
+      <Route path="/employee/attendance" element={
+        <ProtectedRoute>
+           <Layout><Attendance /></Layout>
+        </ProtectedRoute>
+      } />
+
+      <Route path="/employee/salary" element={
+        <ProtectedRoute>
+           <Layout><Salary /></Layout>
+        </ProtectedRoute>
+      } />
+
+      {/* Redirect Unknown Paths to Login */}
+      <Route path="*" element={<Navigate to="/login" />} />
+
     </Routes>
   );
 }

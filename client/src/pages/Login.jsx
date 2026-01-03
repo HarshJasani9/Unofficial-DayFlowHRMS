@@ -1,26 +1,52 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
+import { useAuth } from '../context/AuthContext'; // Import Auth Context
 import { Sun, Moon, ArrowLeft, Mail, Lock } from 'lucide-react';
+import axios from 'axios'; // Import Axios for API calls
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  
   const navigate = useNavigate();
   const { theme, toggleTheme } = useTheme();
+  const { login } = useAuth(); // Get the login function
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    
-    // Frontend Error Simulation (Requirement 3.1.2: Incorrect credentials should display error)
-    if (email === 'error@test.com') {
-      setError("Invalid email or password. Please try again.");
-      return;
-    }
+    setError(''); // Clear previous errors
 
-    // Success redirect
-    navigate('/dashboard');
+    try {
+      // 1. CALL THE SERVER
+      // Note: Ensure your server is running on port 5000
+      const response = await axios.post('http://localhost:5000/api/auth/login', {
+        email,
+        password
+      });
+
+      // 2. CHECK SUCCESS
+      if (response.data.success) {
+        // Save Token
+        localStorage.setItem('token', response.data.token);
+        
+        // Update Global State
+        login(response.data.user);
+        
+        // 3. REDIRECT
+        // Requirement 3.1.2: Successful login redirects to dashboard
+        navigate('/dashboard');
+      }
+    } catch (err) {
+      // 4. HANDLE ERRORS
+      // Requirement 3.1.2: Incorrect credentials should display error
+      if(err.response && !err.response.data.success) {
+        setError(err.response.data.error); // Show server message (e.g. "Wrong Password")
+      } else {
+        setError("Server Connection Failed. Is the backend running?");
+      }
+    }
   };
 
   return (
@@ -55,7 +81,7 @@ const Login = () => {
           <p className="text-gray-500 dark:text-gray-400 mt-2">Sign in to access your HR portal</p>
         </div>
 
-        {/* Error Message Display (Requirement 3.1.2) */}
+        {/* Error Message Display */}
         {error && (
           <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-100 dark:border-red-800 text-red-600 dark:text-red-400 text-sm rounded-lg text-center animate-pulse">
             {error}
