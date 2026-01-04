@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext'; // Import Auth Context
 import { Sun, Moon, ArrowLeft, Mail, Lock } from 'lucide-react';
-import api from "../../config/api"; // Import Axios for API calls
+import api from "../config/api"; // Import Axios for API calls
 
 const Login = () => {
   const [email, setEmail] = useState('');
