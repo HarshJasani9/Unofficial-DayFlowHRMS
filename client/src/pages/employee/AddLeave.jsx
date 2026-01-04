@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-
+import api from '../../config/api';
 const AddLeave = () => {
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
@@ -40,7 +39,7 @@ const AddLeave = () => {
 
         try {
             const token = localStorage.getItem('token');
-            const response = await axios.post('http://localhost:5000/api/leave/add', formData, {
+            const response = await api.post('/leave/add', formData, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             if(response.data.success) {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api, { imageUrl } from '../../config/api';
 import { Plus, Eye, Edit, Trash2 } from 'lucide-react';
 
 const EmployeeList = () => {
@@ -12,7 +12,7 @@ const EmployeeList = () => {
       setLoading(true);
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get('http://localhost:5000/api/auth/employees', {
+        const response = await api.get('/auth/employees', {
             headers: { Authorization: `Bearer ${token}` }
         });
         if(response.data.success) {
@@ -62,8 +62,7 @@ const EmployeeList = () => {
                     <td className="p-4 flex items-center gap-3">
                         <div className="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center text-primary font-bold overflow-hidden">
                             {emp.userId?.profileImage ? (
-                                <img src={`http://localhost:5000/uploads/${emp.userId.profileImage}`} className="w-full h-full object-cover"/>
-                            ) : (
+                             <img src={`${imageUrl}/uploads/${emp.userId.profileImage}`} className="w-full h-full object-cover"/>    ) : (
                                 emp.userId?.name?.charAt(0)
                             )}
                         </div>

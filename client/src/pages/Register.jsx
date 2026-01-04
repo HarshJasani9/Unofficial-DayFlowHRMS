@@ -19,7 +19,7 @@ const Register = () => {
 
     try {
       // 1. Call the Server (Section 3.1.1)
-      const response = await axios.post('http://localhost:5000/api/auth/register', formData);
+      const response = await api.post('/auth/register', formData);
       
       if(response.data.success) {
         alert("Registration Successful! Please Login.");

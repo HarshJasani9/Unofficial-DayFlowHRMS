@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api, { imageUrl } from '../../config/api';
 
 const EditEmployee = () => {
     const { id } = useParams();
@@ -25,7 +25,7 @@ const EditEmployee = () => {
         const fetchEmployee = async () => {
             try {
                 const token = localStorage.getItem('token');
-                const response = await axios.get(`http://localhost:5000/api/auth/employees/${id}`, {
+                const response = await api.get(`/auth/employees/${id}`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 if(response.data.success) {
@@ -76,8 +76,7 @@ const EditEmployee = () => {
                 formData.append('image', profileImage);
             }
 
-            const response = await axios.put(
-                `http://localhost:5000/api/auth/employees/${id}`, 
+            const response = await api.put(`/auth/employees/${id}`, 
                 formData,
                 { 
                     headers: { 
@@ -108,8 +107,7 @@ const EditEmployee = () => {
                         {previewUrl ? (
                             <img src={previewUrl} className="w-full h-full object-cover" />
                         ) : currentImage ? (
-                            <img src={`http://localhost:5000/uploads/${currentImage}`} className="w-full h-full object-cover" />
-                        ) : (
+                      <img src={`${imageUrl}/uploads/${currentImage}`} className="w-full h-full object-cover" />    ) : (
                             <div className="flex items-center justify-center h-full text-gray-400 font-bold text-xl">N/A</div>
                         )}
                      </div>

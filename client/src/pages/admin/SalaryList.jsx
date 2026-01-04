@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import api from '../../config/api';
 import { Plus, Search } from 'lucide-react';
 
 const SalaryList = () => {
@@ -12,7 +12,7 @@ const SalaryList = () => {
         setLoading(true);
         try {
             const token = localStorage.getItem('token');
-            const response = await axios.get('http://localhost:5000/api/salary', {
+          const response = await api.get('/salary', {
                 headers: { Authorization: `Bearer ${token}` }
             });
             if(response.data.success) {

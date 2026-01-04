@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../../config/api';
 
 const AddEmployee = () => {
     const navigate = useNavigate();
@@ -26,8 +26,7 @@ const AddEmployee = () => {
         e.preventDefault();
         try {
             const token = localStorage.getItem('token');
-            const response = await axios.post(
-                'http://localhost:5000/api/auth/add-employee', 
+            const response = await await api.post('/auth/add-employee',
                 formData,
                 { headers: { Authorization: `Bearer ${token}` } }
             );

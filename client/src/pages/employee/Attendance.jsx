@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../config/api';
 
 const Attendance = () => {
     const [attendance, setAttendance] = useState([]);
@@ -11,13 +11,13 @@ const Attendance = () => {
             const token = localStorage.getItem('token');
             
             // 1. Get History
-            const response = await axios.get('http://localhost:5000/api/attendance', {
+            const response = await api.get('/attendance', {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setAttendance(response.data.attendance);
 
             // 2. Get Today's Status
-            const statusRes = await axios.get('http://localhost:5000/api/attendance/status', {
+            const statusRes = await api.get('/attendance/status', {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setTodayStatus(statusRes.data.attendance);
@@ -34,7 +34,7 @@ const Attendance = () => {
     const handleClockIn = async (action) => {
         try {
             const token = localStorage.getItem('token');
-            await axios.post('http://localhost:5000/api/attendance/update', 
+            await api.post('/attendance/update', 
                 { status: action }, 
                 { headers: { Authorization: `Bearer ${token}` } }
             );

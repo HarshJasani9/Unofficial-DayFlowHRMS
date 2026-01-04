@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../config/api';
 import { useNavigate } from 'react-router-dom';
 
 const AddSalary = () => {
@@ -18,7 +18,7 @@ const AddSalary = () => {
         const fetchEmployees = async () => {
             try {
                 const token = localStorage.getItem('token');
-                const response = await axios.get('http://localhost:5000/api/auth/employees', {
+                const response = await api.get('/auth/employees', {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 if(response.data.success) {
@@ -39,7 +39,7 @@ const AddSalary = () => {
         e.preventDefault();
         try {
             const token = localStorage.getItem('token');
-            const response = await axios.post('http://localhost:5000/api/salary/add', formData, {
+            const response = await api.post('/salary/add', formData, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             if(response.data.success) {

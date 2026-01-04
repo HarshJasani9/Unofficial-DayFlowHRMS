@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from "../config/api";
 import { User, Mail, Briefcase, MapPin, Phone, Save, X, Edit2, Camera } from 'lucide-react';
 
 const EmployeeProfile = () => {
@@ -16,7 +16,7 @@ const EmployeeProfile = () => {
   const fetchProfile = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:5000/api/auth/employees/me', {
+      const response = await api.get('/auth/employees/me', {
           headers: { Authorization: `Bearer ${token}` }
       });
       if(response.data.success) {
@@ -55,7 +55,7 @@ const EmployeeProfile = () => {
             formData.append('image', profileImage);
         }
 
-        await axios.put('http://localhost:5000/api/auth/employees/me', formData, {
+        await api.put('/auth/employees/me', formData, {
             headers: { 
                 Authorization: `Bearer ${token}`,
                 'Content-Type': 'multipart/form-data' // Crucial Header
@@ -100,8 +100,7 @@ const EmployeeProfile = () => {
                         {previewUrl ? (
                             <img src={previewUrl} alt="Preview" className="w-full h-full object-cover" />
                         ) : employee.userId.profileImage ? (
-                            <img src={`http://localhost:5000/uploads/${employee.userId.profileImage}`} alt="Profile" className="w-full h-full object-cover" />
-                        ) : (
+                          <img src={`${imageUrl}/uploads/${employee.userId.profileImage}`} alt="Profile" className="w-full h-full object-cover" />   ) : (
                             <div className="w-full h-full flex items-center justify-center text-4xl font-bold text-gray-400">
                                 {employee.userId.name.charAt(0)}
                             </div>

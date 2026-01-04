@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../config/api';
 import { Check, X, MessageSquare, AlertCircle } from 'lucide-react';
 
 const LeaveList = () => {
@@ -15,7 +15,7 @@ const LeaveList = () => {
     const fetchLeaves = async () => {
         try {
             const token = localStorage.getItem('token');
-            const response = await axios.get('http://localhost:5000/api/leave', {
+            const response = await api.get('/leave', {
                 headers: { Authorization: `Bearer ${token}` }
             });
             if(response.data.success) {
@@ -42,7 +42,7 @@ const LeaveList = () => {
     const handleAction = async () => {
         try {
             const token = localStorage.getItem('token');
-            await axios.put(`http://localhost:5000/api/leave/${selectedLeaveId}`, { 
+           await api.put(`/leave/${selectedLeaveId}`, { 
                 status: selectedStatus,
                 adminComment: comment 
             }, {

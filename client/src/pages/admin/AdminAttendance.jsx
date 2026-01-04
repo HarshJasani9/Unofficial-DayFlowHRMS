@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../config/api';
 import { Filter } from 'lucide-react';
 
 const AdminAttendance = () => {
@@ -11,7 +11,7 @@ const AdminAttendance = () => {
         setLoading(true);
         try {
             const token = localStorage.getItem('token');
-            const response = await axios.get(`http://localhost:5000/api/attendance?date=${filterDate}`, {
+            const response = await api.get(`/attendance?date=${filterDate}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             if(response.data.success) {

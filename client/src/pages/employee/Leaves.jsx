@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../config/api';
 import { Link } from 'react-router-dom';
 import { Plus } from 'lucide-react';
 
@@ -11,7 +11,7 @@ const Leaves = () => {
     const fetchLeaves = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get('http://localhost:5000/api/leave', {
+        const response = await api.get('/leave', {
           headers: { Authorization: `Bearer ${token}` }
         });
         if (response.data.success) {

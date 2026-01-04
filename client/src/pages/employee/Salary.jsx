@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../config/api';
 
 const Salary = () => {
     const [salary, setSalary] = useState([]);
@@ -10,7 +10,7 @@ const Salary = () => {
             try {
                 const token = localStorage.getItem('token');
                 // Note the special endpoint for employees
-                const response = await axios.get('http://localhost:5000/api/salary/employee/me', {
+              const response = await api.get('/salary/employee/me', {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 if(response.data.success) {

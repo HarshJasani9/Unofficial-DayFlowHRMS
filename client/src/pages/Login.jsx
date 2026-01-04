@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext'; // Import Auth Context
 import { Sun, Moon, ArrowLeft, Mail, Lock } from 'lucide-react';
-import axios from 'axios'; // Import Axios for API calls
+import api from "../../config/api"; // Import Axios for API calls
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -21,7 +21,7 @@ const Login = () => {
     try {
       // 1. CALL THE SERVER
       // Note: Ensure your server is running on port 5000
-      const response = await axios.post('http://localhost:5000/api/auth/login', {
+      const response = await api.post('/auth/login', {
         email,
         password
       });
