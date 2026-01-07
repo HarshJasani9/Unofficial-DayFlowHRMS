@@ -68,6 +68,15 @@ client/
 🚀 Getting Started
 Prerequisites
 
-Node.js 18+
+Node.js 18+ and npm / yarn / pnpm
+Installation
 
-npm / yarn / pnpm
+Navigate to the frontend directory:
+```text
+cd client
+```
+
+Install dependencies:
+```text
+npm install
+```
