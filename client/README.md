@@ -64,3 +64,10 @@ client/
 ├── postcss.config.js
 ├── tailwind.config.js
 └── vite.config.js
+```
+🚀 Getting Started
+Prerequisites
+
+Node.js 18+
+
+npm / yarn / pnpm
