@@ -48,12 +48,10 @@ The goal of this project is to reduce manual HR effort, improve accuracy, and ce
 
 ---
 
+## 📁 Project Structure
+
 ```text
 OdooXGCET_CodeCatalyst/
 ├── client/     # React frontend application
 ├── server/     # Node.js backend API
 └── README.md   # Project documentation
-
-
-
-
