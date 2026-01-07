@@ -60,6 +60,7 @@ OdooXGCET_CodeCatalyst/
 
 Please refer to the respective README files for detailed setup instructions:
 
-- [Frontend Documentation](./Frontend/README.md)
-- [Backend Documentation](./Backend/README.md)
+- [Frontend Documentation](./client/README.md)
+- [Backend Documentation](./server/README.md)
+
 
