@@ -56,12 +56,7 @@ OdooXGCET_CodeCatalyst/
 ├── server/     # Node.js backend API
 └── README.md   # Project documentation
 ```
-## 🚀 Getting Started
-
-Please refer to the respective README files for detailed setup instructions:
-
-- [Frontend Documentation](./client/README.md)
-- [Backend Documentation](./server/README.md)
+ 
 
 
 
